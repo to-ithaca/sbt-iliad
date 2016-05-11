@@ -17,9 +17,6 @@ trait TaskKeys {
   val generatedR = taskKey[Seq[File]]("List of sources generated from resource packaging")
   val buildApk = taskKey[Unit]("Builds apk")
   val install = taskKey[Unit]("Installs apk onto connected Android devices")
-
-  //TODO: implement
-  val runApk = taskKey[Unit]("Runs installed apk on connected Android devices")
 }
 
 /** Keys for android variables */
@@ -29,6 +26,8 @@ trait AndroidKeys {
 
   val targetPackage: SettingKey[String] = settingKey("Package containing Android Activity")
   val packageForResources: SettingKey[String] = settingKey("Target package for resource packaging")
+  val activityName: SettingKey[String] = settingKey("Class name for Android Activity")
+
   val androidHome: TaskKey[File] = taskKey("Location of ANDROID_HOME environment variable")
   val adb: TaskKey[File] = taskKey("Location of adb.exe")
   val sdkJar: TaskKey[File] = taskKey("Location of Android SDK jar")

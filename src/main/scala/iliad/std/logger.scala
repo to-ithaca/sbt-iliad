@@ -15,6 +15,7 @@ final class LoggerOps(log: Logger) {
   def progressIndicator : AndroidProgressIndicator = new AndroidProgressIndicator(log)
   def outputHandler: AndroidProcessOutputHandler = new AndroidProcessOutputHandler(log)
   def test: TestLogger = new TestLogger(log)
+  def run: RunShellLogger = new RunShellLogger(log)
 }
 
 
@@ -130,4 +131,30 @@ final class TestLogger(log: Logger) extends ITestRunListener {
   override def testIgnored(test: TestIdentifier) {
     log.warn("ignored: %s" format test.getTestName)
   }
+}
+
+
+import com.android.ddmlib.IShellOutputReceiver
+
+final class RunShellLogger(log: Logger) extends IShellOutputReceiver {
+
+  private val b = new StringBuilder
+
+  def logMessage(msg: String): Unit = log.info(msg)
+
+  override def addOutput(data: Array[Byte], off: Int, len: Int) = {
+    b.append(new String(data, off, len))
+    val lastNL = b.lastIndexOf("\n")
+    if (lastNL != -1) {
+      b.mkString.split("\\n") foreach logMessage
+      b.delete(0, lastNL + 1)
+    }
+  }
+
+  override def flush() {
+    b.mkString.split("\\n").filterNot(_.isEmpty) foreach logMessage
+    b.clear()
+  }
+
+  override def isCancelled = false
 }

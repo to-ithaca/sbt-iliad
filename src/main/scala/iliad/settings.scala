@@ -25,6 +25,7 @@ trait AllSettings {
     packageResources := PackageResources().value,
     generatedR := GeneratedR().value,
     install := Install().value,
+    run:= Run().value,
     (unmanagedClasspath in Compile) := (unmanagedClasspath in Compile).value :+ Attributed.blank(sdkJar.value),
     (unmanagedClasspath in Test) := (unmanagedClasspath in Test).value :+ Attributed.blank(sdkJar.value)
   ) ++
