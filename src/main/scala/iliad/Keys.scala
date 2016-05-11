@@ -18,8 +18,8 @@ trait TaskKeys {
   val buildApk = taskKey[Unit]("Builds apk")
   val install = taskKey[Unit]("Installs apk onto connected Android devices")
 
-  //TODO: implement this
-  val run = taskKey[Unit]("Runs installed apk on connected Android devices")
+  //TODO: implement
+  val runApk = taskKey[Unit]("Runs installed apk on connected Android devices")
 }
 
 /** Keys for android variables */
