@@ -26,6 +26,9 @@ object IliadPlugin extends AutoPlugin {
     /** If true, skips proguard obfuscation.  Default is false. */
     val skipProguard = proguardKeys.skipProguard
 
+    /** Seq of aars to include as dependencies - required setting */
+    val supportAars = androidKeys.supportAars
+
     /** All settings to include */
     val iliadSettings = allSettings.settings
   }

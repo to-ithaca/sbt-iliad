@@ -19,15 +19,14 @@ trait AllSettings {
   /** Common settings for Android and AndroidTest configurations */
   val commonSettings = Seq(
     deviceStream := Devices().value,
+    aars := Aars().value,
     proguard := Proguard().value,
     dex := Dex().value,
     buildApk:= BuildApk().value,
     packageResources := PackageResources().value,
     generatedR := GeneratedR().value,
     install := Install().value,
-    run:= Run().value,
-    (unmanagedClasspath in Compile) := (unmanagedClasspath in Compile).value :+ Attributed.blank(sdkJar.value),
-    (unmanagedClasspath in Test) := (unmanagedClasspath in Test).value :+ Attributed.blank(sdkJar.value)
+    run:= Run().value
   ) ++
     layoutSettings.settings ++
     androidSDKSettings.settings ++
@@ -35,7 +34,8 @@ trait AllSettings {
 
   val androidSettings = commonSettings ++ Seq(
     sourceDirectory := (sourceDirectory in Compile).value,
-    proguardInputClasspath := (fullClasspath in Runtime).value,
+    (unmanagedClasspath in Compile) := (unmanagedClasspath in Compile).value ++ aars.value :+ Attributed.blank(sdkJar.value),
+    proguardInputClasspath := (fullClasspath in Compile).value,
     targetOut := target.value / "android",
     apkName := name.value,
     (test in Android) := (test in AndroidTest).value,
@@ -44,6 +44,7 @@ trait AllSettings {
 
   val androidTestSettings = commonSettings ++ Defaults.testSettings ++ Seq(
     (exportJars in AndroidTest) := true,
+    (unmanagedClasspath in Test) := (unmanagedClasspath in Test).value ++ aars.value :+ Attributed.blank(sdkJar.value),
     proguardInputClasspath := (fullClasspath in AndroidTest).value,
     targetOut := target.value / "androidTest",
     apkName := name.value + "-androidTest",
@@ -71,8 +72,9 @@ trait AndroidSDKSettings {
     androidHome := androidHomeTask.value,
     adb := androidHome.value / (SdkConstants.OS_SDK_PLATFORM_TOOLS_FOLDER + SdkConstants.FN_ADB),
     sdkJar := androidHome.value / "platforms" / targetPlatform.value / "android.jar",
+    supportRepository := androidHome.value / "extras" / "android" / "m2repository",
     androidBuilder := Builder().value
-  )
+)
 
   private def androidHomeTask = Def.task(
     sys.env.get("ANDROID_HOME") match {
@@ -115,6 +117,8 @@ trait LayoutSettings {
     manifest := sourceDirectory.value / "AndroidManifest.xml",
     androidResources := sourceDirectory.value / "res",
     assets := sourceDirectory.value / "assets",
+
+    aarOut := targetOut.value / "dependency-aars",
 
     proguardOut := targetOut.value / "proguard",
     proguardJars := proguardOut.value / "jars",

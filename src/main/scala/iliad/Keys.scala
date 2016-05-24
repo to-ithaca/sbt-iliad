@@ -11,6 +11,7 @@ import Keys._
 trait TaskKeys {
   val deviceStream: TaskKey[SZTask[List[IDevice]]] = taskKey("Scalaz stream of devices")
 
+  val aars = taskKey[Seq[Attributed[File]]]("Unzips aar dependencies into jars")
   val proguard = taskKey[Unit]("Runs proguard obfuscation")
   val dex = taskKey[Unit]("Runs dex")
   val packageResources = taskKey[Unit]("Packages resources using AAPT (Android Asset Packaging Tool)")
@@ -31,10 +32,12 @@ trait AndroidKeys {
   val androidHome: TaskKey[File] = taskKey("Location of ANDROID_HOME environment variable")
   val adb: TaskKey[File] = taskKey("Location of adb.exe")
   val sdkJar: TaskKey[File] = taskKey("Location of Android SDK jar")
+  val supportRepository: TaskKey[File] = taskKey("Location of Android Support Repository")
+  val supportAars: TaskKey[Seq[String]] = taskKey("Location of aar files relative to the support repository")
   val androidBuilder: TaskKey[BuilderAPI] = taskKey("Android Builder")
 }
 
-/** Keys for proguard obfistication */
+/** Keys for proguard obfuscation */
 trait ProguardKeys {
   val proguardInputClasspath: TaskKey[Classpath] = taskKey("Input jars for proguard obfuscation")
   val proguardLibraryJars: TaskKey[Seq[File]] = taskKey("Library jars for proguard obfuscation")
@@ -52,6 +55,8 @@ trait LayoutKeys {
 
   /** Generated files and folders */
   val targetOut: SettingKey[File] = settingKey("Target directory containing all output")
+
+  val aarOut: SettingKey[File] = settingKey("Directory containing unzipped aars")
 
   val proguardOut: SettingKey[File] = settingKey("Directory containing proguard output")
   val proguardJars: SettingKey[File] = settingKey("Directory containing proguard obfuscated jars")
