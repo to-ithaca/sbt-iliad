@@ -8,18 +8,19 @@ trait AllSettings {
   import allKeys._
 
   /** Configuration for all Android tasks */
-  val Android = config("android") extend Compile
+  val Android = config("android")
 
   /** Configuration for Android instrumentation testing
     *
     * Should not be used normally - refer to android:test to execute instrumentation testing
     */
-  val AndroidTest = config("androidTest") extend Test
+  val AndroidTest = config("androidTest")
 
   /** Common settings for Android and AndroidTest configurations */
   val commonSettings = Seq(
     deviceStream := Devices().value,
     aars := Aars().value,
+    activity := Activity().value,
     proguard := Proguard().value,
     dex := Dex().value,
     buildApk:= BuildApk().value,
@@ -32,15 +33,30 @@ trait AllSettings {
     androidSDKSettings.settings ++
     proguardSettings.settings
 
-  val androidSettings = commonSettings ++ Seq(
+  val androidSettings = inConfig(Android)(Defaults.compileSettings ++ commonSettings ++ Seq(
     sourceDirectory := (sourceDirectory in Compile).value,
-    (unmanagedClasspath in Compile) := (unmanagedClasspath in Compile).value ++ aars.value :+ Attributed.blank(sdkJar.value),
+    unmanagedClasspath ++= aars.value :+ Attributed.blank(sdkJar.value),
+    sourceGenerators <+= activity,
+    sourceGenerators <+= generatedR,
+    targetOut := target.value / "android",
+    apkName := name.value,
+    packageForResources := targetPackage.value
+  ))
+
+/*commonSettings ++ Seq(
+    compile := (compile in Compile).value,
+    (sourceGenerators in Android) := (sourceGenerators in Compile).value,
+    (sourceGenerators in Android) <+= activity,
+    (sourceGenerators in Android) <+= generatedR,
+    sourceDirectory := (sourceDirectory in Compile).value,
+    unmanagedClasspath := (unmanagedClasspath in Compile).value ++ aars.value :+ Attributed.blank(sdkJar.value),
     proguardInputClasspath := (fullClasspath in Compile).value,
     targetOut := target.value / "android",
     apkName := name.value,
     (test in Android) := (test in AndroidTest).value,
     packageForResources := targetPackage.value
   )
+ */
 
   val androidTestSettings = commonSettings ++ Defaults.testSettings ++ Seq(
     (exportJars in AndroidTest) := true,
@@ -54,11 +70,10 @@ trait AllSettings {
   )
 
   /** All combined settings */
-  val settings = inConfig(Android)(androidSettings) ++
+  val settings = androidSettings ++
     inConfig(AndroidTest)(androidTestSettings) ++ Seq(
     (dependencyClasspath in AndroidTest) := (dependencyClasspath in Test).value,
-    (sourceDirectory in AndroidTest) := sourceDirectory.value / "androidTest",
-    (sourceGenerators in Compile) <+= (generatedR in Android))
+    (sourceDirectory in AndroidTest) := sourceDirectory.value / "androidTest")
 }
 
 /** Android specific settings
@@ -69,6 +84,7 @@ trait AllSettings {
 trait AndroidSDKSettings {
   import androidKeys._
   val settings = Seq(
+    activityName := "MainActivity",
     androidHome := androidHomeTask.value,
     adb := androidHome.value / (SdkConstants.OS_SDK_PLATFORM_TOOLS_FOLDER + SdkConstants.FN_ADB),
     sdkJar := androidHome.value / "platforms" / targetPlatform.value / "android.jar",
@@ -94,11 +110,11 @@ trait ProguardSettings {
   import proguardKeys._
   import androidKeys._
   val settings = Seq(
-    (exportJars in Compile) := true,
-    (exportJars in Test) := true,
+    exportJars := true,
     javaHomeDir := javaHomeTask.value,
     proguardLibraryJars := Seq(sdkJar.value, javaHomeDir.value),
-    skipProguard := false
+    skipProguard := false,
+    proguardInputClasspath := fullClasspath.value
   )
 
   private def javaHomeTask = Def.task(
@@ -119,6 +135,8 @@ trait LayoutSettings {
     assets := sourceDirectory.value / "assets",
 
     aarOut := targetOut.value / "dependency-aars",
+
+    activityOut := targetOut.value / "generatedActivity",
 
     proguardOut := targetOut.value / "proguard",
     proguardJars := proguardOut.value / "jars",

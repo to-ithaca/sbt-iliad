@@ -16,4 +16,6 @@ object IOReader {
   def unzip(source: File, destination: File): Reader[IO.type, Unit] = Reader(_.unzip(source, destination))
 
   def rename(from: File, to: File): Reader[IO.type, Unit] = Reader(_ => from.renameTo(to))
+
+  def write(target: File, body: String): Reader[IO.type, Unit] = Reader(_.write(target, body))
 }

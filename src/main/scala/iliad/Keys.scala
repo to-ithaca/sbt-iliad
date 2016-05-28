@@ -12,6 +12,7 @@ trait TaskKeys {
   val deviceStream: TaskKey[SZTask[List[IDevice]]] = taskKey("Scalaz stream of devices")
 
   val aars = taskKey[Seq[Attributed[File]]]("Unzips aar dependencies into jars")
+  val activity = taskKey[Seq[File]]("Generates the android.app.Activity")
   val proguard = taskKey[Unit]("Runs proguard obfuscation")
   val dex = taskKey[Unit]("Runs dex")
   val packageResources = taskKey[Unit]("Packages resources using AAPT (Android Asset Packaging Tool)")
@@ -20,12 +21,17 @@ trait TaskKeys {
   val install = taskKey[Unit]("Installs apk onto connected Android devices")
 }
 
+/** Keys for producing the Android Activity */
+trait ActivityKeys {
+  val appName: SettingKey[String] = settingKey("Trait corresponding to the application e.g. foo.bar.MyApp")
+}
+
 /** Keys for android variables */
 trait AndroidKeys {
   val targetPlatform: SettingKey[String] = settingKey("Target android platform e.g. android-22")
   val minSdkVersion: SettingKey[Int] = settingKey("Minimum Android SDK version")
 
-  val targetPackage: SettingKey[String] = settingKey("Package containing Android Activity")
+  val targetPackage: SettingKey[String] = settingKey("Package containing the android.app.Activity")
   val packageForResources: SettingKey[String] = settingKey("Target package for resource packaging")
   val activityName: SettingKey[String] = settingKey("Class name for Android Activity")
 
@@ -57,6 +63,8 @@ trait LayoutKeys {
   val targetOut: SettingKey[File] = settingKey("Target directory containing all output")
 
   val aarOut: SettingKey[File] = settingKey("Directory containing unzipped aars")
+
+  val activityOut: SettingKey[File] = settingKey("Directory containing the android.app.Activity")
 
   val proguardOut: SettingKey[File] = settingKey("Directory containing proguard output")
   val proguardJars: SettingKey[File] = settingKey("Directory containing proguard obfuscated jars")

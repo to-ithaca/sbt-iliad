@@ -17,7 +17,10 @@ object IliadPlugin extends AutoPlugin {
     /** Package containing Android Activity - required setting */
     val targetPackage = androidKeys.targetPackage
 
-    /** Name of Activity class to use - required setting */
+    /** Name of the application */
+    val appName = activityKeys.appName
+
+    /** Name of Activity class to use. Default is MainActivity */
     val activityName = androidKeys.activityName
 
     /** Package containing Android instrumentation tests - required setting */
