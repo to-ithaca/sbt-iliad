@@ -19,7 +19,9 @@ import iliad.android._
 import iliad.kernel._
 import iliad.implicits._
 
-final class $activityName extends IliadActivity with $appName
+final class $activityName extends IliadActivity with $appName {
+   def view: Int = R.layout.activity_main
+}
 """
 
   private def runTask(log: Logger, root: File, targetPackage: String, appName: String, activityName: String): Seq[File] = {
