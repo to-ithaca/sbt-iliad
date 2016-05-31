@@ -1,14 +1,13 @@
+package iliad
 
-package object iliad {
-  object activityKeys extends ActivityKeys
+package object android {
   object androidKeys extends AndroidKeys
   object layoutKeys extends LayoutKeys
   object proguardKeys extends ProguardKeys
   object taskKeys extends TaskKeys
   object testKeys extends TestKeys
   object allKeys
-      extends ActivityKeys
-      with AndroidKeys
+      extends AndroidKeys
       with LayoutKeys
       with ProguardKeys
       with TaskKeys

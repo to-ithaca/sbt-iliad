@@ -1,7 +1,8 @@
 package iliad
+package android
 
 import com.android.ddmlib.IDevice
-import iliad.io.BuilderAPI
+import iliad.android.io.BuilderAPI
 import scalaz.concurrent.{Task => SZTask}
 
 import sbt._
@@ -21,19 +22,12 @@ trait TaskKeys {
   val install = taskKey[Unit]("Installs apk onto connected Android devices")
 }
 
-/** Keys for producing the Android Activity */
-trait ActivityKeys {
-  val appName: SettingKey[String] = settingKey("Trait corresponding to the application e.g. foo.bar.MyApp")
-}
-
 /** Keys for android variables */
 trait AndroidKeys {
   val targetPlatform: SettingKey[String] = settingKey("Target android platform e.g. android-22")
   val minSdkVersion: SettingKey[Int] = settingKey("Minimum Android SDK version")
 
-  val targetPackage: SettingKey[String] = settingKey("Package containing the android.app.Activity")
   val packageForResources: SettingKey[String] = settingKey("Target package for resource packaging")
-  val activityName: SettingKey[String] = settingKey("Class name for Android Activity")
 
   val androidHome: TaskKey[File] = taskKey("Location of ANDROID_HOME environment variable")
   val adb: TaskKey[File] = taskKey("Location of adb.exe")

@@ -1,4 +1,5 @@
 package iliad
+package android
 
 import com.android.SdkConstants
 import sbt.Keys._
@@ -6,6 +7,7 @@ import sbt._
 
 trait AllSettings {
   import allKeys._
+  import iliad.common.commonKeys._
 
   /** Configuration for all Android tasks */
   val Android = config("android")
@@ -40,40 +42,24 @@ trait AllSettings {
     sourceGenerators <+= generatedR,
     targetOut := target.value / "android",
     apkName := name.value,
-    packageForResources := targetPackage.value
+    packageForResources := targetPackage.value,
+    test := (test in AndroidTest).value
   ))
 
-/*commonSettings ++ Seq(
-    compile := (compile in Compile).value,
-    (sourceGenerators in Android) := (sourceGenerators in Compile).value,
-    (sourceGenerators in Android) <+= activity,
-    (sourceGenerators in Android) <+= generatedR,
-    sourceDirectory := (sourceDirectory in Compile).value,
-    unmanagedClasspath := (unmanagedClasspath in Compile).value ++ aars.value :+ Attributed.blank(sdkJar.value),
-    proguardInputClasspath := (fullClasspath in Compile).value,
-    targetOut := target.value / "android",
-    apkName := name.value,
-    (test in Android) := (test in AndroidTest).value,
-    packageForResources := targetPackage.value
-  )
- */
-
-  val androidTestSettings = commonSettings ++ Defaults.testSettings ++ Seq(
-    (exportJars in AndroidTest) := true,
-    (unmanagedClasspath in Test) := (unmanagedClasspath in Test).value ++ aars.value :+ Attributed.blank(sdkJar.value),
-    proguardInputClasspath := (fullClasspath in AndroidTest).value,
+  val androidTestSettings = inConfig(AndroidTest)(Defaults.testSettings ++ commonSettings ++ Seq(
+    sourceDirectory := sourceDirectory.value / "androidTest",
+    unmanagedClasspath ++= aars.value :+ Attributed.blank(sdkJar.value),
     targetOut := target.value / "androidTest",
     apkName := name.value + "-androidTest",
     apkOut := targetOut.value / (apkName.value + ".ap_"),
     test := AndroidTestTask().value,
     packageForResources := testPackage.value
-  )
-
+))
+ 
   /** All combined settings */
-  val settings = androidSettings ++
-    inConfig(AndroidTest)(androidTestSettings) ++ Seq(
-    (dependencyClasspath in AndroidTest) := (dependencyClasspath in Test).value,
-    (sourceDirectory in AndroidTest) := sourceDirectory.value / "androidTest")
+  val settings = androidSettings ++ androidTestSettings ++ Seq(
+    libraryDependencies  += "com.ithaca" %% "iliad-kernel-android" % "0.0.1-SNAPSHOT"
+  )
 }
 
 /** Android specific settings
@@ -83,8 +69,9 @@ trait AllSettings {
   */
 trait AndroidSDKSettings {
   import androidKeys._
+  import iliad.common.commonKeys._
   val settings = Seq(
-    activityName := "MainActivity",
+    generatedAppName := "MainActivity",
     androidHome := androidHomeTask.value,
     adb := androidHome.value / (SdkConstants.OS_SDK_PLATFORM_TOOLS_FOLDER + SdkConstants.FN_ADB),
     sdkJar := androidHome.value / "platforms" / targetPlatform.value / "android.jar",

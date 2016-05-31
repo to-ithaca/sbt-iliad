@@ -1,4 +1,5 @@
 package iliad
+package android
 
 import com.android.ddmlib.AndroidDebugBridge.IDeviceChangeListener
 import com.android.ddmlib.{IDevice, AndroidDebugBridge}
@@ -13,7 +14,7 @@ import scalaz.concurrent.{Task => SZTask}
 
 /** Finds all connected devices using adb (Android Debug Bridge) */
 object Devices {
-  import iliad.androidKeys._
+  import iliad.android.androidKeys._
 
   import scala.concurrent.duration._
   private val timeout = 1 second

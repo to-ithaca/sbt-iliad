@@ -1,6 +1,8 @@
 package iliad
+package android
 
-import iliad.io.{BuilderAPI, IOReader, BuilderReader}
+import iliad.io.IOReader
+import iliad.android.io.{BuilderAPI, BuilderReader}
 import sbt._
 import Keys._
 

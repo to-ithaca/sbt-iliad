@@ -1,4 +1,6 @@
-package iliad.io
+package iliad
+package android
+package io
 
 import proguard.Configuration
 

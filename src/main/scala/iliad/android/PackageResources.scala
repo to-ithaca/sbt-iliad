@@ -1,8 +1,10 @@
 package iliad
+package android
 
 import java.util
 
-import iliad.io.{BuilderReader, BuilderAPI, IOReader}
+import iliad.io.IOReader
+import iliad.android.io.{BuilderReader, BuilderAPI}
 
 import scala.collection.JavaConverters._
 

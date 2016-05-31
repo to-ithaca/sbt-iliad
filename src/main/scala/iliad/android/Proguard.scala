@@ -1,6 +1,9 @@
 package iliad
+package android
 
-import iliad.io.{IOReader, ProGuardAPI}
+import iliad.io.IOReader
+import iliad.android.io.ProGuardAPI
+
 import sbt._
 import Keys._
 
