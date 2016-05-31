@@ -22,7 +22,7 @@ trait AllSettings {
   val commonSettings = Seq(
     deviceStream := Devices().value,
     aars := Aars().value,
-    activity := Activity().value,
+    generateApp := GenerateApp().value,
     proguard := Proguard().value,
     dex := Dex().value,
     buildApk:= BuildApk().value,
@@ -38,7 +38,7 @@ trait AllSettings {
   val androidSettings = inConfig(Android)(Defaults.compileSettings ++ commonSettings ++ Seq(
     sourceDirectory := (sourceDirectory in Compile).value,
     unmanagedClasspath ++= aars.value :+ Attributed.blank(sdkJar.value),
-    sourceGenerators <+= activity,
+    sourceGenerators <+= generateApp,
     sourceGenerators <+= generatedR,
     targetOut := target.value / "android",
     apkName := name.value,
@@ -71,7 +71,6 @@ trait AndroidSDKSettings {
   import androidKeys._
   import iliad.common.commonKeys._
   val settings = Seq(
-    generatedAppName := "MainActivity",
     androidHome := androidHomeTask.value,
     adb := androidHome.value / (SdkConstants.OS_SDK_PLATFORM_TOOLS_FOLDER + SdkConstants.FN_ADB),
     sdkJar := androidHome.value / "platforms" / targetPlatform.value / "android.jar",
@@ -115,6 +114,7 @@ trait ProguardSettings {
 /** Settings for the directory structure */
 trait LayoutSettings {
   import layoutKeys._
+  import iliad.common.commonKeys._
   val settings = Seq(
     proguardConfig := sourceDirectory.value / "proguard-project.txt",
     manifest := sourceDirectory.value / "AndroidManifest.xml",
@@ -123,7 +123,7 @@ trait LayoutSettings {
 
     aarOut := targetOut.value / "dependency-aars",
 
-    activityOut := targetOut.value / "generatedActivity",
+    generatedAppOut := targetOut.value / "generatedActivity",
 
     proguardOut := targetOut.value / "proguard",
     proguardJars := proguardOut.value / "jars",

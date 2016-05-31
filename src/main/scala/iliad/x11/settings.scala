@@ -25,6 +25,7 @@ trait AllSettings {
 
 trait LayoutSettings {
   import layoutKeys._
+  import iliad.common.commonKeys._
 
   val settings = Seq (
     targetOut := target.value / "x11",
