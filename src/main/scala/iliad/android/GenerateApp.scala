@@ -36,7 +36,7 @@ final class $activityName extends IliadBootstrap with $appName {
     * Generates an activity from the app specified by [[appName]]
     * The generated activity is called [[generatedAppName]]
     * The generated activity is put in package [[targetPackage]]
-    * The generated activity is written to [[activityOut]]
+    * The generated activity is written to [[generatedAppOut]]
     */
   def apply() = Def.task {
     runTask(streams.value.log, generatedAppOut.value, targetPackage.value, appName.value, generatedAppName.value)   
