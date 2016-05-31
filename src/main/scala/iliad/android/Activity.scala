@@ -7,7 +7,8 @@ import iliad.common.CodeGenerator
 import sbt._
 import Keys._
 
-object Activity extends CodeGenerator {
+/** Generates the android.app.Activity */
+object GenerateApp extends CodeGenerator {
   import layoutKeys._
   import iliad.common.commonKeys._
   import androidKeys._
@@ -30,7 +31,14 @@ final class $activityName extends IliadBootstrap with $appName {
     generateCode(log, root, targetPackage, activityName, code)
   }
 
+  /** Generates the android.app.Activity
+    * 
+    * Generates an activity from the app specified by [[appName]]
+    * The generated activity is called [[generatedAppName]]
+    * The generated activity is put in package [[targetPackage]]
+    * The generated activity is written to [[activityOut]]
+    */
   def apply() = Def.task {
-    runTask(streams.value.log, activityOut.value, targetPackage.value, appName.value, generatedAppName.value)   
+    runTask(streams.value.log, generatedAppOut.value, targetPackage.value, appName.value, generatedAppName.value)   
   }
 }
