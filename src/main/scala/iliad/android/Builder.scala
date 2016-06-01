@@ -1,6 +1,8 @@
 package iliad
+package android
 
-import iliad.io.{SbtJavaProcessExecutor, BuilderAPI}
+import iliad.android.io.{SbtJavaProcessExecutor, BuilderAPI}
+import iliad.android.std.logger._
 
 import scala.collection.JavaConverters._
 
@@ -10,11 +12,11 @@ import com.android.ide.common.process.DefaultProcessExecutor
 import com.android.sdklib.repositoryv2.AndroidSdkHandler
 import sbt._
 import Keys._
-import iliad.std.logger._
+
 
 /** Creates an Android Builder */
 object Builder {
-  import iliad.androidKeys._
+  import iliad.android.androidKeys._
 
   private def runTask(log: Logger, name: String, androidHome: File, targetPlatform: String): BuilderAPI = {
     log.info("Creating Android Builder")

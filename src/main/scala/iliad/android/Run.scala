@@ -1,4 +1,5 @@
 package iliad
+package android
 
 import com.android.ddmlib.IDevice
 
@@ -7,10 +8,11 @@ import Keys._
 
 import scalaz.concurrent.{Task => SZTask}
 
-import iliad.std.logger._
+import iliad.android.std.logger._
 
 /** Runs the activity on all connected devices */
 object Run {
+  import iliad.common.commonKeys._
   import taskKeys._
   import androidKeys._
 
@@ -38,6 +40,6 @@ object Run {
     */
   def apply() = Def.task{
     install.value
-    runTask(streams.value.log, targetPackage.value, activityName.value, deviceStream.value)
+    runTask(streams.value.log, targetPackage.value, generatedAppName.value, deviceStream.value)
   }
 }

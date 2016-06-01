@@ -1,4 +1,5 @@
 package iliad
+package android
 
 import com.android.ddmlib.{IDevice, DdmPreferences, IShellOutputReceiver}
 import com.android.ddmlib.testrunner.{ITestRunListener, InstrumentationResultParser}
@@ -9,7 +10,7 @@ import sbt._
 import Keys._
 
 /** Runs instrumentation tests */
-import iliad.std.logger._
+import iliad.android.std.logger._
 
 object AndroidTestTask {
   import testKeys._

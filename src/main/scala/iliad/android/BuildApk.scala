@@ -1,14 +1,16 @@
 package iliad
+package android
+
+import iliad.android.io.{BuilderReader, BuilderAPI}
 
 import com.android.builder.model.SigningConfig
 import com.android.builder.signing.DefaultSigningConfig
 import com.android.ide.common.signing.KeystoreHelper
-import iliad.io.{BuilderReader, BuilderAPI}
 
 import sbt._
 import Keys._
 
-import std.logger._
+import iliad.android.std.logger._
 
 /** Builds an apk */
 object BuildApk {

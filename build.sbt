@@ -26,3 +26,4 @@ lazy val root = (project in file("."))
   .settings(sbtPlugin := true)
   .settings(commonSettings: _*)
   .settings(publishSettings: _*)
+

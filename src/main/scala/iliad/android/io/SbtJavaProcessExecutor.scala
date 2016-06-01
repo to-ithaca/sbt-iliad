@@ -1,4 +1,6 @@
-package iliad.io
+package iliad
+package android
+package io
 
 import com.android.ide.common.process._
 import sbt.{Fork, ForkOptions}

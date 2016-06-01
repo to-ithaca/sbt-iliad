@@ -18,3 +18,7 @@ project/plugins/project/
 
 # IntelliJ specific
 .idea/
+
+# ensime specific
+.ensime/
+.ensime_cache/

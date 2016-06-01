@@ -1,12 +1,14 @@
-package iliad.io
+package iliad
+package android
+package io
 
 import scala.collection.JavaConverters._
 
 import com.android.build.gradle.internal.dsl.DexOptions
 import com.android.builder.core.AndroidBuilder
 
-import iliad.{AaptCommand, DebugSigningConfig}
-import iliad.std.logger._
+import iliad.android.{AaptCommand, DebugSigningConfig}
+import iliad.android.std.logger._
 
 import sbt._
 

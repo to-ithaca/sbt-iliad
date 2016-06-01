@@ -1,4 +1,6 @@
-package iliad.std
+package iliad
+package android
+package std
 
 import sbt._
 
