@@ -19,7 +19,7 @@ import iliad._
 import iliad.kernel._
 import iliad.x11._
 
-object $generatedAppName extends IliadBootstrap with $appName {
+object $generatedAppName extends X11Bootstrap with $appName {
    val width: Int = $width
    val height: Int = $height
 }

@@ -21,7 +21,7 @@ import iliad.android._
 import iliad.kernel._
 import iliad.implicits._
 
-final class $activityName extends IliadBootstrap with $appName {
+final class $activityName extends AndroidBootstrap with $appName {
    def view: Int = R.layout.activity_main
 }
 """
