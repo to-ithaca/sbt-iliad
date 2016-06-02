@@ -24,6 +24,14 @@ object IliadPlugin extends AutoPlugin {
 
     /** Name of the generated app - required setting */
     val generatedAppName = commonKeys.generatedAppName
+
+    /** width in pixels of the view */
+    val width = commonKeys.width
+
+    /** height in pixels of the view */
+    val height = commonKeys.height
+
+    val targetOut = commonKeys.targetOut
   }
 
   /** Values for an Android target */
@@ -51,14 +59,14 @@ object IliadPlugin extends AutoPlugin {
   /** Values for an X11 (Linux / Mac) target */
   trait X11AutoImport {
     import x11._
-
-    /**Width of the app window */
-    val width = viewKeys.width
-
-    /** Height of the app window */
-    val height = viewKeys.height
-
     /**All settings to include */
     val iliadX11Settings = allSettings.settings
+  }
+
+  /** Values for win32 (Windows) target */
+  trait Win32AutoImport {
+    import win32._
+    /** all settings to include */
+    val iliadWin32Settings = allSettings.settings
   }
 }

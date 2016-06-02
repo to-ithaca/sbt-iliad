@@ -1,5 +1,5 @@
 package iliad
 
-package object x11 {
+package object win32 {
   object allSettings extends AllSettings
 }
