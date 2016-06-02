@@ -11,6 +11,7 @@ object IliadPlugin extends AutoPlugin {
       extends CommonAutoImport 
       with AndroidAutoImport 
       with X11AutoImport
+      with Win32AutoImport
 
   /** Values for defining the Iliad application */
   trait CommonAutoImport {

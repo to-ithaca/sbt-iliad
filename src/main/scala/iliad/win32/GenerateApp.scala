@@ -12,7 +12,7 @@ object GenerateApp extends CodeGenerator {
 
   def template(width: Int, height: Int, targetPackage: String, generatedAppName: String, appName: String): String = 
     s"""package $targetPackage
-        object $generatedAppName extends _root_.iliad.kernel.Win32Bootstrap($appName, $width, $height) with $appName"""
+        object $generatedAppName extends _root_.iliad.kernel.Win32Bootstrap("$appName", $width, $height) with $appName"""
 
   private def runTask(log: Logger, root: File, targetPackage: String, appName: String, generatedAppName: String, width: Int, height: Int): Seq[File] = {
     val code = template(width, height, targetPackage, generatedAppName, appName)
