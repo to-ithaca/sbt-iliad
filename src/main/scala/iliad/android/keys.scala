@@ -52,9 +52,6 @@ trait LayoutKeys {
   val androidResources: SettingKey[File] = settingKey("Directory containing Android resources")
   val assets: SettingKey[File] = settingKey("Directory containing Android assets")
 
-  /** Generated files and folders */
-  val targetOut: SettingKey[File] = settingKey("Target directory containing all output")
-
   val aarOut: SettingKey[File] = settingKey("Directory containing unzipped aars")
 
   val proguardOut: SettingKey[File] = settingKey("Directory containing proguard output")

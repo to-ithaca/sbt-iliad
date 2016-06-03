@@ -3,7 +3,7 @@ lazy val publishSettings = Seq(
   scalaVersion := "2.10.6",
   licenses += ("Apache-2.0", url("https://www.apache.org/licenses/LICENSE-2.0.html")),
   organization := "com.ithaca",
-  version := "0.0.2"
+  version := "0.0.2-SNAPSHOT"
 )
 
 val tools = "2.1.0"
