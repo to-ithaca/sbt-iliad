@@ -32,7 +32,6 @@ object IliadPlugin extends AutoPlugin {
     /** height in pixels of the view */
     val height = commonKeys.height
 
-    val targetOut = commonKeys.targetOut
   }
 
   /** Values for an Android target */
