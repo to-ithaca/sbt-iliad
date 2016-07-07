@@ -17,12 +17,14 @@ object GenerateApp extends CodeGenerator {
 package $packageName
 
 import iliad._
-import iliad.android._
 import iliad.kernel._
 import iliad.implicits._
 
 final class $activityName extends AndroidBootstrap with $appName {
-   def view: Int = R.layout.activity_main
+   def mainXML: Int = R.layout.activity_main
+   def fragmentXML: Int = R.layout.fragment_main
+   def subView: Int = R.id.gl_view
+   def subFragment: Int = R.id.gl_fragment
 }
 """
 
