@@ -14,7 +14,8 @@ object Aars {
   import layoutKeys._
   import androidKeys._
 
-  private def zipPairs(sources: List[File], targetDir: File): List[(File, File)] = sources.map( src => src -> targetDir / s"${src.name}")
+  private def zipPairs(sources: List[File], targetDir: File): List[(File, File)] =
+    sources.map( src => src -> targetDir / s"${src.name}").filterNot { case (_, d) => d.exists }
 
   private def renameJarIn(directory: File, name: String): Reader[IO.type, Unit] = {
     val jar = (directory ** "*.jar").get.head
@@ -40,7 +41,7 @@ object Aars {
     val ioOp = ioOperation(pairs)
 
     log.info(s"Using aar target directory ${targetDir.absolutePath}")
-    log.info(s"Unzipping ${supportAars.size} aars:")
+    log.info(s"Unzipping ${pairs.size} aars:")
     pairs.foreach {
       case (s, d) => log.info(s"src ${s.absolutePath} -> dest ${d.absolutePath}")
     }

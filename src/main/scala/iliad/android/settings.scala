@@ -58,7 +58,8 @@ trait AllSettings {
  
   /** All combined settings */
   val settings = androidSettings ++ androidTestSettings ++ Seq(
-    libraryDependencies  += "com.ithaca" %% "iliad-kernel-android" % "0.0.1-SNAPSHOT"
+    ivyConfigurations += Android,
+    libraryDependencies += "com.ithaca" %% "iliad-kernel-android" % "0.0.1-SNAPSHOT" % Android
   )
 }
 
