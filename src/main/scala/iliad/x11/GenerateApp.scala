@@ -13,9 +13,10 @@ object GenerateApp extends CodeGenerator {
   def template(width: Int, height: Int, targetPackage: String, generatedAppName: String, appName: String): String = s"""
 package $targetPackage
 
-object $generatedAppName extends _root_.iliad.kernel.X11Bootstrap with $appName {
-   val width: Int = $width
-   val height: Int = $height
+object $generatedAppName extends $appName {
+   def main(args: Array[String]): Unit = {
+     _root_.iliad.Session.start($width, $height)
+   }
 }
 """
   private def runTask(log: Logger, root: File, targetPackage: String, appName: String, generatedAppName: String, width: Int, height: Int): Seq[File] = {

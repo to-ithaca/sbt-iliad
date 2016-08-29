@@ -19,6 +19,8 @@ trait TaskKeys {
   val generatedR = taskKey[Seq[File]]("List of sources generated from resource packaging")
   val buildApk = taskKey[Unit]("Builds apk")
   val install = taskKey[Unit]("Installs apk onto connected Android devices")
+
+  val checkJars = taskKey[Unit]("Checks dependency jar java versions")
 }
 
 /** Keys for android variables */
@@ -56,6 +58,8 @@ trait LayoutKeys {
 
   val proguardOut: SettingKey[File] = settingKey("Directory containing proguard output")
   val proguardJars: SettingKey[File] = settingKey("Directory containing proguard obfuscated jars")
+
+  val checkJarsOut: SettingKey[File] = settingKey("Directory containing check jars output")
 
   val dexOut: SettingKey[File] = settingKey("Directory containing dexed jars")
 

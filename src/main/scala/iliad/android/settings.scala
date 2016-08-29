@@ -10,13 +10,13 @@ trait AllSettings {
   import iliad.common.commonKeys._
 
   /** Configuration for all Android tasks */
-  val Android = config("android")
+  val Android = config("android") extend Compile
 
   /** Configuration for Android instrumentation testing
     *
     * Should not be used normally - refer to android:test to execute instrumentation testing
     */
-  val AndroidTest = config("androidTest")
+  val AndroidTest = config("androidTest") extend Compile
 
   /** Common settings for Android and AndroidTest configurations */
   val commonSettings = Seq(
@@ -29,7 +29,8 @@ trait AllSettings {
     packageResources := PackageResources().value,
     generatedR := GeneratedR().value,
     install := Install().value,
-    run:= Run().value
+    run:= Run().value,
+    checkJars := CheckJars().value
   ) ++
     layoutSettings.settings ++
     androidSDKSettings.settings ++
@@ -128,6 +129,8 @@ trait LayoutSettings {
 
     proguardOut := targetOut.value / "proguard",
     proguardJars := proguardOut.value / "jars",
+
+    checkJarsOut := targetOut.value / "checkJars",
 
     dexOut := targetOut.value / "dex",
 
