@@ -17,7 +17,7 @@ lazy val commonSettings = Seq(
     "com.android.tools.build" % "gradle" % tools,
     "com.android.tools.build" % "builder-model" % tools,
     "org.scalaz.stream" %% "scalaz-stream" % "0.8",
-    "org.typelevel" %% "cats" % "0.5.0"
+    "org.typelevel" %% "cats" % "0.6.0"
   ),
   addCompilerPlugin("org.spire-math" %% "kind-projector" % "0.7.1")
 )

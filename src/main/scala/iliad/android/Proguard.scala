@@ -5,6 +5,7 @@ import iliad.io.IOReader
 import iliad.android.io.ProGuardAPI
 
 import sbt._
+import sbt.classpath.ClasspathUtilities
 import Keys._
 
 import cats.data.Reader
@@ -24,6 +25,7 @@ object Proguard {
   private def runTask(log: Logger, configFile: File, libraries: Seq[File], inputClasspath: Classpath, baseOutput: File, jarOutput: File) = {
 
     val inputs = inputClasspath.files.filterNot(libraries.toSet)
+      .filter(ClasspathUtilities.isArchive)
 
     val config = Config(configFile, libraries, inputs, baseOutput, jarOutput)
     val proguardOperation = config.operation

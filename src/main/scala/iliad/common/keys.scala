@@ -1,4 +1,5 @@
 package iliad
+package common
 
 import sbt._
 import Keys._
@@ -16,6 +17,7 @@ trait CommonKeys {
   val height: SettingKey[Int] = settingKey("Height of the view in pixels")
   val targetOut: SettingKey[File] = settingKey("Target directory containing all output")
 
+  val glMode: SettingKey[GLMode] = settingKey("GL Run Mode.  Can be DEBUG or BASIC")
 }
 
 
