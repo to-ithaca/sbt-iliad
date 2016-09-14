@@ -32,6 +32,10 @@ object IliadPlugin extends AutoPlugin {
     /** height in pixels of the view */
     val height = commonKeys.height
 
+    /** mode for opengl runner */
+    val glMode = commonKeys.glMode
+
+    val GLMode = iliad.common.GLMode
   }
 
   /** Values for an Android target */

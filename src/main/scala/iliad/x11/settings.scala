@@ -4,6 +4,8 @@ package x11
 import sbt._
 import Keys._
 
+import iliad.common.GLMode
+
 trait AllSettings {
   import iliad.common.commonKeys._
 
@@ -36,7 +38,8 @@ trait AllSettings {
     mainClass := Some(s"${targetPackage.value}.${generatedAppName.value}"),
     test := (test in X11Test).value,
     targetOut := target.value / "x11",
-    generatedAppOut := targetOut.value / "generated"
+    generatedAppOut := targetOut.value / "generated",
+    glMode := GLMode.BASIC
   )) ++ Seq(
     ivyConfigurations += X11,
     libraryDependencies += "com.ithaca" %% "iliad-x11" % "0.0.1-SNAPSHOT" % X11
