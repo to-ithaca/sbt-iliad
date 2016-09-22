@@ -3,6 +3,7 @@ package android
 
 import iliad.io.IOReader
 import iliad.common.CodeGenerator
+import iliad.common.GLMode
 
 import sbt._
 import Keys._
@@ -13,23 +14,21 @@ object GenerateApp extends CodeGenerator {
   import iliad.common.commonKeys._
   import androidKeys._
 
-  private def template(packageName: String, appName: String, activityName: String): String = s"""
+  private def template(packageName: String, appName: String, activityName: String, mode: GLMode): String = s"""
 package $packageName
 
-import iliad._
-import iliad.kernel._
-import iliad.implicits._
-
-final class $activityName extends AndroidBootstrap with $appName {
+final class $activityName extends _root_.iliad.AndroidBootstrap with $appName {
    def mainXML: Int = R.layout.activity_main
    def fragmentXML: Int = R.layout.fragment_main
    def subView: Int = R.id.gl_view
    def subFragment: Int = R.id.gl_fragment
+
+   ${mode.runner}
 }
 """
 
-  private def runTask(log: Logger, root: File, targetPackage: String, appName: String, activityName: String): Seq[File] = {
-    val code = template(targetPackage, appName, activityName)
+  private def runTask(log: Logger, root: File, targetPackage: String, appName: String, activityName: String, mode: GLMode): Seq[File] = {
+    val code = template(targetPackage, appName, activityName, mode)
     generateCode(log, root, targetPackage, activityName, code)
   }
 
@@ -41,6 +40,7 @@ final class $activityName extends AndroidBootstrap with $appName {
     * The generated activity is written to [[generatedAppOut]]
     */
   def apply() = Def.task {
-    runTask(streams.value.log, generatedAppOut.value, targetPackage.value, appName.value, generatedAppName.value)   
+    runTask(streams.value.log, generatedAppOut.value, targetPackage.value, appName.value, generatedAppName.value, 
+      glMode.value)
   }
 }

@@ -5,18 +5,20 @@ import com.android.SdkConstants
 import sbt.Keys._
 import sbt._
 
+import iliad.common.GLMode
+
 trait AllSettings {
   import allKeys._
   import iliad.common.commonKeys._
 
   /** Configuration for all Android tasks */
-  val Android = config("android") extend Compile
+  val Android = config("android")
 
   /** Configuration for Android instrumentation testing
     *
     * Should not be used normally - refer to android:test to execute instrumentation testing
     */
-  val AndroidTest = config("androidTest") extend Compile
+  val AndroidTest = config("androidTest")
 
   /** Common settings for Android and AndroidTest configurations */
   val commonSettings = Seq(
@@ -30,7 +32,8 @@ trait AllSettings {
     generatedR := GeneratedR().value,
     install := Install().value,
     run:= Run().value,
-    checkJars := CheckJars().value
+    checkJars := CheckJars().value,
+    glMode := GLMode.BASIC
   ) ++
     layoutSettings.settings ++
     androidSDKSettings.settings ++
@@ -60,7 +63,7 @@ trait AllSettings {
   /** All combined settings */
   val settings = androidSettings ++ androidTestSettings ++ Seq(
     ivyConfigurations += Android,
-    libraryDependencies += "com.ithaca" %% "iliad-kernel-android" % "0.0.1-SNAPSHOT" % Android
+    libraryDependencies += "com.ithaca" %% "iliad-android" % "0.0.1-SNAPSHOT" % Android
   )
 }
 
